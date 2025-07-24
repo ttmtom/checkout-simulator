@@ -17,10 +17,6 @@ WORKDIR /root/
 
 COPY --from=builder /app/main .
 
-# Create the /tmp/certs directory and write the certificates from build arguments
-ARG CA_CERT
-ARG CLIENT_CERT
-ARG CLIENT_KEY
 ARG APP_ENV
 
 EXPOSE 3000

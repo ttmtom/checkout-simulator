@@ -1,4 +1,4 @@
-package transaction
+package payment
 
 type Service struct {
 }

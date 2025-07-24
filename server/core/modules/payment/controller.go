@@ -1,4 +1,4 @@
-package transaction
+package payment
 
 import (
 	"crypto-checkout-simulator/server/pkg/response"

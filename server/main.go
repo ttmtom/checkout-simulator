@@ -21,11 +21,11 @@ func New(c *config.Config) *Server {
 		panic(err)
 	}
 
+	e := echo.New()
 	v := validator.New()
 
 	mc := modules.InitModuleContainer(&storage, v)
-
-	e := echo.New()
+	tc := mc.GetPaymentModule().GetController()
 
 	{
 		e.GET("/health/", func(e echo.Context) error {
@@ -34,9 +34,7 @@ func New(c *config.Config) *Server {
 	}
 
 	checkout := e.Group("/checkout/")
-
 	{
-		tc := mc.GetTransactionModule().GetController()
 		checkout.POST("", tc.Checkout)
 	}
 

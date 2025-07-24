@@ -1,4 +1,4 @@
-package transaction
+package payment
 
 import (
 	"crypto-checkout-simulator/server/core/interfaces/database"
@@ -10,7 +10,7 @@ type Module struct {
 	service    *Service
 }
 
-func NewTransactionModule(store *database.Storage, validator *validator.Validate) *Module {
+func NewPaymentModule(store *database.Storage, validator *validator.Validate) *Module {
 
 	return &Module{
 		controller: NewController(),
