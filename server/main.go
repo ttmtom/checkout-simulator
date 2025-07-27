@@ -32,6 +32,11 @@ func New(c *config.Config) *Server {
 		checkout.POST("", tc.Checkout)
 	}
 
+	webhooks := e.Group("/webhooks")
+	{
+		webhooks.POST("", tc.WebhookProcessor)
+	}
+
 	return &Server{
 		e,
 		c,

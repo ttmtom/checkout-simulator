@@ -11,8 +11,8 @@ import (
 )
 
 type Postgresql struct {
-	payment *impl_repositories.PaymentRepositoryImpl
-	order   *impl_repositories.OrderRepositoryImpl
+	payment repositories.Payment
+	order   repositories.Order
 }
 
 func New(config *config.DatabaseConfig) (database.Storage, error) {
@@ -30,12 +30,12 @@ func New(config *config.DatabaseConfig) (database.Storage, error) {
 		return nil, dbOpenErr
 	}
 
-	PaymentRepo := impl_repositories.NewPaymentRepoImpl(PostgresDb)
-	OrderRepo := impl_repositories.NewOrderRepoImpl(PostgresDb)
+	paymentRepo := impl_repositories.NewPaymentRepoImpl(PostgresDb)
+	orderRepo := impl_repositories.NewOrderRepoImpl(PostgresDb)
 
 	return &Postgresql{
-		payment: PaymentRepo,
-		order:   OrderRepo,
+		payment: paymentRepo,
+		order:   orderRepo,
 	}, nil
 }
 

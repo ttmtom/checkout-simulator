@@ -17,3 +17,7 @@ func (m *MockCoinbase) CreateCharge(id string) *paymentgateway.ChargeResponse {
 		PaymentUrl: fmt.Sprintf("https://fake.coinbase.com/pay/%s", id),
 	}
 }
+
+func (m *MockCoinbase) ValidateEvent(valid bool) bool {
+	return valid
+}

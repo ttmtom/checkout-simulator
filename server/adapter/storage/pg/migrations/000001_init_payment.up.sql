@@ -38,7 +38,6 @@ BEGIN;
 
     CREATE TABLE payment_events (
         id BIGSERIAL PRIMARY KEY,
-        provider_type VARCHAR(255) NOT NULL,
         payment_id BIGINT NOT NULL REFERENCES payments(id) ON DELETE CASCADE,
         service_provider_id VARCHAR(255) NOT NULL,
         status payment_status_enum NOT NULL,

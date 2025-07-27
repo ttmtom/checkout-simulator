@@ -1,6 +1,7 @@
 package payment
 
 import (
+	mockcoinbase "crypto-checkout-simulator/server/adapter/payment-gateway/mock-coinbase"
 	"crypto-checkout-simulator/server/core/interfaces/database"
 	"github.com/go-playground/validator"
 )
@@ -11,8 +12,9 @@ type Module struct {
 }
 
 func NewPaymentModule(store database.Storage, validator *validator.Validate) *Module {
-	service := NewService(store.GetPaymentRepository(), store.GetOrderRepository())
-	controller := NewController(validator, service)
+	mockCoinbase := mockcoinbase.NewMockCoinbase()
+	service := NewService(store.GetPaymentRepository(), store.GetOrderRepository(), mockCoinbase)
+	controller := NewController(validator, service, mockCoinbase)
 
 	return &Module{
 		controller,
