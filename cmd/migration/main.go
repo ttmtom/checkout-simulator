@@ -31,12 +31,13 @@ func main() {
 
 	pgConfig := config.LoadConfig()
 
-	databaseURL := fmt.Sprintf("postgres://%s:%s@%s:%s/%s",
+	databaseURL := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?%s",
 		pgConfig.User,
 		pgConfig.Password,
 		pgConfig.Host,
 		pgConfig.Port,
 		pgConfig.DBName,
+		"sslmode=disable",
 	)
 
 	sourceURL := "file://server/adapter/storage/pg/migrations"

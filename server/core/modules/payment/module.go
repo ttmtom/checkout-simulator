@@ -10,11 +10,13 @@ type Module struct {
 	service    *Service
 }
 
-func NewPaymentModule(store *database.Storage, validator *validator.Validate) *Module {
+func NewPaymentModule(store database.Storage, validator *validator.Validate) *Module {
+	service := NewService(store.GetPaymentRepository(), store.GetOrderRepository())
+	controller := NewController(validator, service)
 
 	return &Module{
-		controller: NewController(),
-		service:    NewService(),
+		controller,
+		service,
 	}
 }
 

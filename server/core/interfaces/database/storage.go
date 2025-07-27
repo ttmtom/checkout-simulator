@@ -9,5 +9,6 @@ import "crypto-checkout-simulator/server/core/interfaces/database/repositories"
  */
 
 type Storage interface {
+	GetOrderRepository() repositories.Order
 	GetPaymentRepository() repositories.Payment
 }

@@ -2,7 +2,6 @@ package server
 
 import (
 	"crypto-checkout-simulator/config"
-	"crypto-checkout-simulator/server/adapter/storage/pg"
 	"crypto-checkout-simulator/server/core/modules"
 	"fmt"
 	"github.com/go-playground/validator"
@@ -16,24 +15,19 @@ type Server struct {
 }
 
 func New(c *config.Config) *Server {
-	storage, err := pg.New(c.Database)
-	if err != nil {
-		panic(err)
-	}
-
 	e := echo.New()
 	v := validator.New()
 
-	mc := modules.InitModuleContainer(&storage, v)
+	mc := modules.InitModuleContainer(c, v)
 	tc := mc.GetPaymentModule().GetController()
 
 	{
-		e.GET("/health/", func(e echo.Context) error {
+		e.GET("/health", func(e echo.Context) error {
 			return e.String(http.StatusOK, "OK")
 		})
 	}
 
-	checkout := e.Group("/checkout/")
+	checkout := e.Group("/checkout")
 	{
 		checkout.POST("", tc.Checkout)
 	}

@@ -3,19 +3,34 @@ package impl_repositories
 import (
 	"crypto-checkout-simulator/server/core/models"
 	"gorm.io/gorm"
+	"time"
 )
 
 type PaymentRepositoryImpl struct {
-	DB *gorm.DB
+	db *gorm.DB
 }
 
 func NewPaymentRepoImpl(db *gorm.DB) *PaymentRepositoryImpl {
 	return &PaymentRepositoryImpl{
-		DB: db,
+		db: db,
 	}
 }
 
-func (t PaymentRepositoryImpl) Insert(payment *models.Payment) error {
-	//TODO implement me
-	panic("implement me")
+func (t PaymentRepositoryImpl) CreateNewPayment(orderId int64, gatewayId string, paymentUrl string, amount float64) (*models.Payment, error) {
+	payment := &models.Payment{
+		OrderID:           orderId,
+		ServiceProviderID: gatewayId,
+		PaymentUrl:        paymentUrl,
+		Status:            models.PaymentStatusNew,
+		Amount:            amount,
+		CreatedAt:         time.Now(),
+	}
+
+	res := t.db.Create(&payment)
+
+	if res.Error != nil {
+		return nil, res.Error
+	}
+
+	return payment, nil
 }

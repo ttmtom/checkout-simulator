@@ -1,27 +1,35 @@
 BEGIN;
     CREATE TYPE payment_status_enum AS ENUM (
         'NEW',
+        'CREATED',
         'PENDING',
         'COMPLETED',
-        'SIGNED',
         'FAILED'
-        );
+    );
+
+    CREATE TYPE order_status_enum AS ENUM (
+        'PENDING',
+        'PROCESSING',
+        'COMPLETED',
+        'FAILED'
+    );
 
     CREATE TABLE orders (
         id BIGSERIAL PRIMARY KEY,
         "user" VARCHAR(255) NOT NULL,
-        amount NUMERIC(19, 4) NOT NULL
+        amount NUMERIC(19, 4) NOT NULL,
+        status order_status_enum NOT NULL
     );
 
     CREATE TABLE payments (
         id BIGSERIAL PRIMARY KEY,
         order_id BIGINT NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
         service_provider_id VARCHAR(255) NOT NULL,
+        payment_url VARCHAR(255) NOT NULL,
         status payment_status_enum NOT NULL,
-        amount NUMERIC(19, 4),
-        currency VARCHAR(10),
+        amount NUMERIC(19, 4) NOT NULL,
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-        last_event_at TIMESTAMPTZ NOT NULL
+        last_event_at TIMESTAMPTZ
     );
 
     CREATE INDEX idx_payments_order_id ON payments(order_id);

@@ -3,9 +3,9 @@ package models
 type PaymentStatus string
 
 const (
-	StatusNew       PaymentStatus = "NEW"
-	StatusPending   PaymentStatus = "PENDING"
-	StatusCompleted PaymentStatus = "COMPLETED"
-	StatusSigned    PaymentStatus = "Signed"
-	StatusFailed    PaymentStatus = "FAILED"
+	PaymentStatusNew       PaymentStatus = "NEW"
+	PaymentStatusCreated   PaymentStatus = "CREATED"
+	PaymentStatusPending   PaymentStatus = "PENDING"
+	PaymentStatusCompleted PaymentStatus = "COMPLETED"
+	PaymentStatusFailed    PaymentStatus = "FAILED"
 )
